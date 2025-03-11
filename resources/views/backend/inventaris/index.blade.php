@@ -1,5 +1,30 @@
 @extends('backend.template.main')
 
+@push('css')
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+@endpush
+
+@push('js')
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
+  <script src="{{ asset('backend/asset/backend/js/inventoris.js') }}"></script>
+  <script src="{{ asset('backend/asset/backend/js/helper.js') }}"></script>
+  <script>
+    $(document).ready(function () {
+    $('#example').DataTable({
+      paging: true, // Aktifkan pagination
+      pageLength: 5, // Tampilkan 5 data per halaman
+      lengthMenu: [10, 25, 50, 100] // Opsi jumlah data per halaman
+    });
+    });
+  </script>
+@endpush
+
 @section('content')
 
   <div class="pagetitle">
@@ -14,48 +39,63 @@
 
   <section class="section dashboard">
     <div class="row">
-    <table class="table table-bordered table-centered table-nowrap mb-0 rounded">
-      <thead class="thead-light">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+      <span>Inventaris</span>
+      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#inventarisModal">
+        Create
+      </button>
+      </div>
+      <div class="card-body">
+      @if ($inventories->count() == 0)
       <tr>
-      <th class="border-0 rounded-start text-center">No</th>
-<th class="border-0 text-center">Nama Produk</th>
-<th class="border-0 text-center">Spesifikasi</th>
-<th class="border-0 text-center">Gambar Produk</th>
-<th class="border-0 text-center">Satuan</th>
-<th class="border-0 text-center" colspan="3">Harga Jual</th>
-<th class="border-0 text-center" width="12%">Action</th>
+      <td colspan="7" class="text-center">Data tidak ditemukan</td>
       </tr>
+    @else
+      <div class="table-responsive"> <!-- Tambahkan div ini -->
+      <table id="example" class="table table-striped table-bordered" style="width:100%">
+      <thead>
+        <tr>
+        <th>No</th>
+        <th>Nama Produk</th>
+        <th>Spesifikasi</th>
+        <th>Gambar Produk</th>
+        <th>Satuan</th>
+        <th>Harga Jual</th>
+        <th>Aksi</th>
+        </tr>
       </thead>
       <tbody>
+        @foreach ($inventories as $inven)
       <tr>
-        <td class="text-center">1</td>
-        <td class="text-center">Menu 1</td>
-        <td class="text-center">Category 1</td>
-        <td class="text-center">Rp. 100.000</td>
-        <td class="text-center">Active</td>
-        <td class="text-center"><img src="https://dummyimage.com/200x200/000/fff" alt="" class="img-fluid"></td>
-        <td class="text-center">
-        <a href="" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
-        <a href="" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
-        </td>
+      <td>{{($inventories->currentPage() - 1) * $inventories->perPage() + $loop->iteration}}</td>
+      <td>{{$inven->nama_produk}}</td>
+      <td>{{$inven->spesifikasi}}</td>
+      <td>
+      <img src="{{ asset('storage/' . $inven->image) }}" alt="Gambar Produk" class="img-fluid"
+      style="max-width: 100px;">
+      </td>
+      <td>{{$inven->satuan}}</td>
+      <td>{{$inven->harga_jual}}</td>
+      <td class="text-center">
+      <a class="btn btn-primary" href="#"><i class="bi bi-pencil-square"></i></a>
+      <form class="d-inline" action="#" method="post">
+      @csrf
+      @method('delete')
+      <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
+      </form>
+      </td>
       </tr>
-      <tr>
-        <td class="text-center">1</td>
-        <td class="text-center">Menu 1</td>
-        <td class="text-center">Category 1</td>
-        <td class="text-center">Rp. 100.000</td>
-        <td class="text-center">Active</td>
-        <td class="text-center"><img src="https://dummyimage.com/200x200/000/fff" alt="" class="img-fluid"></td>
-        <td class="text-center">
-        <a href="" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
-        <a href="" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
-        </td>
-      </tr>
-
+    @endforeach
       </tbody>
-    </table>
-
+      </table>
+      </div> <!-- Tutup div ini -->
+    @endif
+      </div>
+    </div>
     </div>
   </section>
+
+  @include('backend.inventaris._modal')
 
 @endsection

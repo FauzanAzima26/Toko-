@@ -4,7 +4,7 @@
   <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : 'collapsed' }}" href="{{ route('dashboard') }}">
+      <a class="nav-link {{ request()->routeIs('admin.inventaris.index') ? 'active' : 'collapsed' }}" href="{{ route('admin.inventaris.index') }}">
         <i class="bi bi-grid"></i>
         <span>Inventaris</span>
       </a>

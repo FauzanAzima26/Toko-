@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+<meta name="csrf-token" content="{{ csrf_token() }}">
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -29,6 +30,8 @@
 
   <!-- Template Main CSS File -->
   <link href="{{asset('backend/asset')}}/css/style.css" rel="stylesheet">
+
+  @stack('css')
 
   <!-- =======================================================
   * Template Name: NiceAdmin
@@ -79,6 +82,8 @@
 
   <!-- Template Main JS File -->
   <script src="{{asset('backend/asset')}}/js/main.js"></script>
+
+  @stack('js')
 
 </body>
 

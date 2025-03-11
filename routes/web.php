@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\logController;
-use App\Http\Controllers\Backend\dashboardController;
+use App\Http\Controllers\Backend\InventoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -11,6 +11,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/inventaris', [dashboardController::class, 'index'])->name('dashboard');
+Route::prefix('admin')->group(function () {
+    Route::resource('inventaris', InventoryController::class)->names('admin.inventaris');
 
-Route::get('/log', [logController::class, 'index'])->name('log');
+    Route::get('log', [logController::class, 'index'])->name('log');
+});
