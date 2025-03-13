@@ -48,8 +48,12 @@ const stopLoading = () => {
 }
 
 const resetForm = (form) => {
-    $(form)[0].reset();
-}
+    $(form).trigger("reset"); // Reset semua input
+    $(form).find("input, textarea, select").val(""); // Kosongkan semua input
+    $(form).find("input[type='file']").val(null); // Kosongkan file input
+};
+
+
 
 const resetValidation = () => {
     $('.is-invalid').removeClass('is-invalid');

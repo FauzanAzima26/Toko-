@@ -111,22 +111,29 @@ class InventoryController extends Controller
         }
     
         try {
-            if ($inventory->image) {
-                // Hapus hanya jika gambar lama ada di storage
+            if (!empty($inventory->image)) {
+                // Ambil path lama tanpa 'storage/'
                 $oldImagePath = str_replace('storage/', '', $inventory->image);
-                if (Storage::exists('public/' . $oldImagePath)) {
-                    Storage::delete('public/' . $oldImagePath);
-                }            
-                // Simpan gambar baru ke public/storage/images
-                $imagePath = $request->file('image')->store('images', 'public');
-                $data['image'] = 'storage/' . $imagePath; // Simpan path untuk akses langsung
-            } else {
-                unset($data['image']); // Jangan ubah jika tidak ada gambar baru
+                
+                // Cek apakah file ada sebelum dihapus
+                if (Storage::disk('public')->exists($oldImagePath)) {
+                    Storage::disk('public')->delete($oldImagePath);
+                } else {
+                    Log::error('File not found: ' . $oldImagePath);
+                }
             }
-    
+        
+            // Simpan gambar baru jika ada
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('images', 'public');
+                $data['image'] = 'storage/' . $imagePath;
+            } else {
+                unset($data['image']);
+            }
+        
             // Update inventaris dengan data baru
             $inventory->update($data);
-    
+        
             return response()->json([
                 'success' => true,
                 'message' => 'Inventaris berhasil diperbarui!',
@@ -136,6 +143,7 @@ class InventoryController extends Controller
             Log::error('Error updating inventory: ' . $e->getMessage());
             return response()->json(['message' => 'Terjadi kesalahan saat memperbarui inventaris.'], 500);
         }
+        
     }
     
     
