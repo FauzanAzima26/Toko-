@@ -20,6 +20,11 @@ class inventorySevice
 
     public function getFirstBy($columns, $value){
 
-        return Inventory::where($columns, $value)->firstOrFail();
+        return Inventory::where($columns, $value)->first();
+    }
+
+    public function update(array $data, string $id)
+    {
+        return Inventory::where('uuid', $id)->update($data);
     }
 }

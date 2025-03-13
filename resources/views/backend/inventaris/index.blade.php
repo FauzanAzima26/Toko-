@@ -56,29 +56,33 @@
       <table id="example" class="table table-striped table-bordered" style="width:100%">
       <thead>
         <tr>
-        <th>No</th>
-        <th>Nama Produk</th>
-        <th>Spesifikasi</th>
-        <th>Gambar Produk</th>
-        <th>Satuan</th>
-        <th>Harga Jual</th>
-        <th>Aksi</th>
+        <th class="text-center">No</th>
+        <th class="text-center">Nama Produk</th>
+        <th class="text-center">Spesifikasi</th>
+        <th class="text-center">Gambar Produk</th>
+        <th class="text-center">Satuan</th>
+        <th class="text-center">Harga Jual</th>
+        <th class="text-center" width="20%">Aksi</th>
         </tr>
       </thead>
       <tbody>
         @foreach ($inventories as $inven)
       <tr>
-      <td>{{($inventories->currentPage() - 1) * $inventories->perPage() + $loop->iteration}}</td>
-      <td>{{$inven->nama_produk}}</td>
-      <td>{{$inven->spesifikasi}}</td>
-      <td>
-      <img src="{{ asset('storage/' . $inven->image) }}" alt="Gambar Produk" class="img-fluid"
-      style="max-width: 100px;">
-      </td>
-      <td>{{$inven->satuan}}</td>
-      <td>{{$inven->harga_jual}}</td>
+      <td class="text-center">{{($inventories->currentPage() - 1) * $inventories->perPage() + $loop->iteration}}</td>
+      <td class="text-center">{{$inven->nama_produk}}</td>
+      <td class="text-center">{{$inven->spesifikasi}}</td>
       <td class="text-center">
-      <a class="btn btn-primary" href="#"><i class="bi bi-pencil-square"></i></a>
+      <img src="{{ asset($inven->image) }}" alt="Gambar Produk" class="img-fluid"
+style="max-width: 100px;">
+      </td>
+      <td class="text-center">{{$inven->satuan}}</td>
+      <td class="text-center">{{$inven->harga_jual}}</td>
+      <td class="text-center">
+      <button class="btn btn-warning btn-sm" onclick="editInventory(this)" data-uuid="{{ $inven->uuid }}">
+    Edit
+</button>
+
+      <a class="btn btn-warning" href="#"><i class="bi bi-eye"></i></a>
       <form class="d-inline" action="#" method="post">
       @csrf
       @method('delete')

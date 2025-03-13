@@ -4,12 +4,17 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Inventory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\service\inventorySevice;
+use Illuminate\Support\Facades\Storage;
 
 class InventoryController extends Controller
 {
-    public function __construct(private inventorySevice $inventoryService){}
+    public function __construct(
+        private inventorySevice $inventoryService)   
+    {
+    }
     /**
      * Display a listing of the resource.
      */
@@ -40,18 +45,19 @@ class InventoryController extends Controller
             'harga_jual' => 'required|numeric',
             'spesifikasi' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'satuan' => 'required|string|max:50',
+            'satuan' => 'required|in:pcs,kg,liter,meter',
         ]);
 
-        // Menyimpan gambar
-        $imagePath = $request->file('image')->store('images', 'public');
+         // Menyimpan gambar dengan path yang benar
+         $imagePath = $request->file('image')->store('images', 'public');
+         $imageFullPath = 'storage/' . $imagePath; // Path yang dapat diakses dari frontend
 
         // Membuat entri baru di database
         $inventory = Inventory::create([
             'nama_produk' => $request->nama_produk,
             'harga_jual' => $request->harga_jual,
             'spesifikasi' => $request->spesifikasi,
-            'image' => $imagePath,
+            'image' => $imageFullPath,
             'satuan' => $request->satuan,
         ]);
 
@@ -66,10 +72,17 @@ class InventoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $uuid)
     {
-        //
+        $inventory = $this->inventoryService->getFirstBy('uuid', $uuid);
+
+        if (!$inventory) {
+            return response()->json(['message' => 'Inventaris tidak ditemukan.'], 404);
+        }
+
+        return response()->json(['data' => $inventory]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -79,17 +92,54 @@ class InventoryController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $uuid)
     {
-        //
+        // Validasi data
+        $data = $request->validate([
+            'nama_produk' => 'required|string|max:255',
+            'harga_jual' => 'required|numeric',
+            'spesifikasi' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'satuan' => 'required|in:pcs,kg,liter,meter',
+        ]);
+    
+        // Mencari inventaris berdasarkan UUID
+        $inventory = $this->inventoryService->getFirstBy('uuid', $uuid);
+    
+        if (!$inventory) {
+            return response()->json(['message' => 'Inventaris tidak ditemukan.'], 404);
+        }
+    
+        try {
+            if ($inventory->image) {
+                // Hapus hanya jika gambar lama ada di storage
+                $oldImagePath = str_replace('storage/', '', $inventory->image);
+                if (Storage::exists('public/' . $oldImagePath)) {
+                    Storage::delete('public/' . $oldImagePath);
+                }            
+                // Simpan gambar baru ke public/storage/images
+                $imagePath = $request->file('image')->store('images', 'public');
+                $data['image'] = 'storage/' . $imagePath; // Simpan path untuk akses langsung
+            } else {
+                unset($data['image']); // Jangan ubah jika tidak ada gambar baru
+            }
+    
+            // Update inventaris dengan data baru
+            $inventory->update($data);
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Inventaris berhasil diperbarui!',
+                'data' => $inventory
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error updating inventory: ' . $e->getMessage());
+            return response()->json(['message' => 'Terjadi kesalahan saat memperbarui inventaris.'], 500);
+        }
     }
+    
+    
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         //
