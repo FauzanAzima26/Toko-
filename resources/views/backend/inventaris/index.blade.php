@@ -49,7 +49,7 @@
       <div class="card-body">
       @if ($inventories->count() == 0)
       <tr>
-      <td colspan="7" class="text-center">Data tidak ditemukan</td>
+      <td colspan="8" class="text-center">Data tidak ditemukan</td> <!-- Ubah colspan menjadi 8 -->
       </tr>
     @else
       <div class="table-responsive"> <!-- Tambahkan div ini -->
@@ -62,31 +62,36 @@
         <th class="text-center">Gambar Produk</th>
         <th class="text-center">Satuan</th>
         <th class="text-center">Harga Jual</th>
+        <th class="text-center">Stock</th> <!-- Tambahkan kolom Stock -->
         <th class="text-center" width="20%">Aksi</th>
         </tr>
       </thead>
       <tbody>
         @foreach ($inventories as $inven)
       <tr>
-      <td class="text-center">{{($inventories->currentPage() - 1) * $inventories->perPage() + $loop->iteration}}</td>
+      <td class="text-center">
+      {{($inventories->currentPage() - 1) * $inventories->perPage() + $loop->iteration}}
+      </td>
       <td class="text-center">{{$inven->nama_produk}}</td>
       <td class="text-center">{{$inven->spesifikasi}}</td>
       <td class="text-center">
-      <img src="{{ asset($inven->image) }}" alt="Gambar Produk" class="img-fluid"
-style="max-width: 100px;">
+      <img src="{{ asset($inven->image) }}" alt="Gambar Produk" class="img-fluid" style="max-width: 100px;">
       </td>
       <td class="text-center">{{$inven->satuan}}</td>
       <td class="text-center">{{$inven->harga_jual}}</td>
+      <td class="text-center">{{$inven->stock}}</td> <!-- Tampilkan data stock -->
       <td class="text-center">
       <button class="btn btn-warning btn-sm" onclick="editInventory(this)" data-uuid="{{ $inven->uuid }}">
-    Edit
-</button>
+      <i class="bi bi-pencil-square"></i>
+      </button>
 
       <a class="btn btn-warning" href="#"><i class="bi bi-eye"></i></a>
-      <form class="d-inline" action="#" method="post">
+      <form class="d-inline" onsubmit="deleteInventory(event)" data-uuid="{{ $inven->uuid }}">
       @csrf
       @method('delete')
-      <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
+      <button type="submit" class="btn btn-danger">
+        <i class="bi bi-trash"></i>
+      </button>
       </form>
       </td>
       </tr>

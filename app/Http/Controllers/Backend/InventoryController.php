@@ -46,12 +46,13 @@ class InventoryController extends Controller
             'spesifikasi' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'satuan' => 'required|in:pcs,kg,liter,meter',
+            'stock' => 'required|integer|min:0', // Validasi untuk stock
         ]);
-
-         // Menyimpan gambar dengan path yang benar
-         $imagePath = $request->file('image')->store('images', 'public');
-         $imageFullPath = 'storage/' . $imagePath; // Path yang dapat diakses dari frontend
-
+    
+        // Menyimpan gambar dengan path yang benar
+        $imagePath = $request->file('image')->store('images', 'public');
+        $imageFullPath = 'storage/' . $imagePath; // Path yang dapat diakses dari frontend
+    
         // Membuat entri baru di database
         $inventory = Inventory::create([
             'nama_produk' => $request->nama_produk,
@@ -59,8 +60,9 @@ class InventoryController extends Controller
             'spesifikasi' => $request->spesifikasi,
             'image' => $imageFullPath,
             'satuan' => $request->satuan,
+            'stock' => $request->stock, // Menambahkan stock
         ]);
-
+    
         // Mengembalikan respons JSON
         return response()->json([
             'success' => true,
@@ -101,6 +103,7 @@ class InventoryController extends Controller
             'spesifikasi' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'satuan' => 'required|in:pcs,kg,liter,meter',
+            'stock' => 'required|integer|min:0', // Validasi untuk stock
         ]);
     
         // Mencari inventaris berdasarkan UUID
@@ -114,7 +117,7 @@ class InventoryController extends Controller
             if (!empty($inventory->image)) {
                 // Ambil path lama tanpa 'storage/'
                 $oldImagePath = str_replace('storage/', '', $inventory->image);
-                
+    
                 // Cek apakah file ada sebelum dihapus
                 if (Storage::disk('public')->exists($oldImagePath)) {
                     Storage::disk('public')->delete($oldImagePath);
@@ -122,7 +125,7 @@ class InventoryController extends Controller
                     Log::error('File not found: ' . $oldImagePath);
                 }
             }
-        
+    
             // Simpan gambar baru jika ada
             if ($request->hasFile('image')) {
                 $imagePath = $request->file('image')->store('images', 'public');
@@ -130,10 +133,10 @@ class InventoryController extends Controller
             } else {
                 unset($data['image']);
             }
-        
+    
             // Update inventaris dengan data baru
             $inventory->update($data);
-        
+    
             return response()->json([
                 'success' => true,
                 'message' => 'Inventaris berhasil diperbarui!',
@@ -143,13 +146,38 @@ class InventoryController extends Controller
             Log::error('Error updating inventory: ' . $e->getMessage());
             return response()->json(['message' => 'Terjadi kesalahan saat memperbarui inventaris.'], 500);
         }
-        
     }
     
     
 
-    public function destroy(string $id)
+    public function destroy(string $uuid)
     {
-        //
+        try {
+            // Cari data inventaris berdasarkan UUID
+            $inventory = $this->inventoryService->getFirstBy('uuid', $uuid);
+    
+            if (!$inventory) {
+                return response()->json(['message' => 'Inventaris tidak ditemukan.'], 404);
+            }
+    
+            // Hapus gambar dari storage jika ada
+            if (!empty($inventory->image)) {
+                $oldImagePath = str_replace('storage/', '', $inventory->image);
+                if (Storage::disk('public')->exists($oldImagePath)) {
+                    Storage::disk('public')->delete($oldImagePath);
+                }
+            }
+    
+            // Hapus data dari database
+            $inventory->delete();
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Inventaris berhasil dihapus!',
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error deleting inventory: ' . $e->getMessage());
+            return response()->json(['message' => 'Terjadi kesalahan saat menghapus inventaris.'], 500);
+        }
     }
 }

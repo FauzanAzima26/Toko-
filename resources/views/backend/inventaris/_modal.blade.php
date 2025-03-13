@@ -19,6 +19,10 @@
                             <label for="harga_jual" class="form-label">Harga Jual</label>
                             <input type="number" class="form-control" id="harga_jual" name="harga_jual" required>
                         </div>
+                        <div class="col">
+                            <label for="stock" class="form-label">Stock</label>
+                            <input type="number" class="form-control" id="stock" name="stock" required>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="spesifikasi" class="form-label">Spesifikasi</label>
@@ -35,15 +39,15 @@
                             <option value="pcs">Pcs</option>
                             <option value="kg">Kg</option>
                             <option value="liter">Liter</option>
-                            <option value="liter">Meter</option>
+                            <option value="meter">Meter</option>
                             <!-- Tambahkan opsi lain sesuai kebutuhan -->
                         </select>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-            <button type="submit" form="formInventory" class="btn btn-primary btnSubmit"></button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="formInventory" class="btn btn-primary btnSubmit"></button>
             </div>
         </div>
     </div>

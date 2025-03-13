@@ -16,6 +16,7 @@ class Inventory extends Model
         'image',
         'satuan',
         'harga_jual',
+        'stock'
     ];
 
     public static function booted(){

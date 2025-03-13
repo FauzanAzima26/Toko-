@@ -6,6 +6,7 @@ const modalInventory = () => {
     resetForm("#formInventory"); // Reset semua input form
     $("#id").val(""); // Kosongkan ID agar tidak terbawa dari edit
     $("#image").val(null); // Kosongkan file input agar tidak ada gambar lama
+    $("#stock").val(""); // Kosongkan field stock
 
     // Pastikan semua elemen modal diubah ke mode "Create"
     $(".modal-title").html('<i class="fa fa-plus"></i> Tambah Inventaris'); // Set judul modal
@@ -15,7 +16,6 @@ const modalInventory = () => {
     $("#inventarisModal").modal("show"); // Tampilkan modal
 };
 
-// Fungsi untuk menyimpan atau memperbarui data inventaris
 $("#formInventory").on("submit", function (e) {
     e.preventDefault(); // Mencegah pengiriman form default
     startLoading(); // Mulai loading
@@ -54,7 +54,6 @@ $("#formInventory").on("submit", function (e) {
     });
 });
 
-// Fungsi untuk mengedit data inventaris
 const editInventory = (e) => {
     let uuid = e.getAttribute("data-uuid"); // Gunakan UUID sebagai pengganti ID
     console.log("Editing inventory with UUID:", uuid);
@@ -81,6 +80,7 @@ const editInventory = (e) => {
             $("#spesifikasi").val(parsedData.spesifikasi);
             $("#harga_jual").val(parsedData.harga_jual);
             $("#satuan").val(parsedData.satuan);
+            $("#stock").val(parsedData.stock); // Isi field stock
 
             // Set judul modal dan teks tombol untuk mode edit
             $(".modal-title").html('<i class="fa fa-edit"></i> Edit Inventaris');
@@ -99,7 +99,6 @@ const editInventory = (e) => {
     });
 };
 
-// Event listener untuk memastikan modal direset sebelum ditampilkan
 $("#inventarisModal").on("show.bs.modal", function () {
     if (submitMethod !== "edit") {
         // Jika bukan mode edit, reset ke mode create
@@ -107,6 +106,7 @@ $("#inventarisModal").on("show.bs.modal", function () {
         $("#formInventory")[0].reset(); // Kosongkan semua input form
         $("#id").val(""); // Kosongkan hidden input ID
         $("#image").val(null); // Kosongkan input file
+        $("#stock").val(""); // Kosongkan field stock
         resetValidation(); // Reset validasi agar tidak ada error lama
         $(".modal-title").html('<i class="fa fa-plus"></i> Tambah Inventaris'); // Set judul modal
         $(".btnSubmit").html('<i class="fa fa-save"></i> Simpan'); // Set teks tombol
@@ -118,5 +118,45 @@ $("#inventarisModal").on("hidden.bs.modal", function () {
     $("#formInventory")[0].reset(); // Kosongkan semua input form
     $("#id").val(""); // Kosongkan hidden input ID
     $("#image").val(null); // Kosongkan input file
+    $("#stock").val(""); // Kosongkan field stock
     resetValidation(); // Reset validasi agar tidak ada error lama
 });
+
+
+const deleteInventory = (e) => {
+    e.preventDefault(); // Mencegah form submit default
+
+    const uuid = e.target.getAttribute("data-uuid"); // Ambil UUID dari tombol delete
+    const form = e.target.closest("form"); // Ambil form terdekat
+
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: "Data yang dihapus tidak dapat dikembalikan!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"), // CSRF token
+                },
+                type: "DELETE",
+                url: `/admin/inventaris/${uuid}`, // URL untuk delete
+                success: function (response) {
+                    if (response.success) {
+                        toastSuccess(response.message); // Tampilkan pesan sukses
+                        reloadTable(); // Reload tabel untuk menampilkan data terbaru
+                    }
+                },
+                error: function (jqXHR) {
+                    console.log("Error:", jqXHR.responseText);
+                    toastError(jqXHR.responseText); // Tampilkan pesan error
+                },
+            });
+        }
+    });
+};
