@@ -4,7 +4,8 @@
   <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link {{ request()->routeIs('admin.inventaris.index') ? 'active' : 'collapsed' }}" href="{{ route('admin.inventaris.index') }}">
+      <a class="nav-link {{ request()->routeIs('admin.inventaris.index') ? 'active' : 'collapsed' }}"
+        href="{{ route('admin.inventaris.index') }}">
         <i class="bi bi-grid"></i>
         <span>Inventaris</span>
       </a>
@@ -20,10 +21,14 @@
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="pages-login.html">
-        <i class="bi bi-box-arrow-in-right"></i>
+      <a class="nav-link collapsed" href="{{ route('logout') }}" onclick=" event.preventDefault();
+                            document.getElementById('logout-form').submit();"">
+        <i class=" bi bi-box-arrow-in-right"></i>
         <span>Logout</span>
       </a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+      </form>
     </li><!-- End Logout Nav -->
 
   </ul>

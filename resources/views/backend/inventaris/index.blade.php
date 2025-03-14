@@ -4,6 +4,7 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
 @endpush
 
 @push('js')
@@ -13,6 +14,7 @@
   <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
   <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
   <script src="{{ asset('backend/asset/backend/js/inventoris.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
   <script src="{{ asset('backend/asset/backend/js/helper.js') }}"></script>
   <script>
     $(document).ready(function () {
@@ -42,7 +44,7 @@
     <div class="card">
       <div class="card-header d-flex justify-content-between align-items-center">
       <span>Inventaris</span>
-      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#inventarisModal">
+      <button type="button" class="btn btn-success mx-3" data-bs-toggle="modal" data-bs-target="#inventarisModal">
         Create
       </button>
       </div>
@@ -63,7 +65,7 @@
         <th class="text-center">Satuan</th>
         <th class="text-center">Harga Jual</th>
         <th class="text-center">Stock</th> <!-- Tambahkan kolom Stock -->
-        <th class="text-center" width="20%">Aksi</th>
+        <th class="text-center" width="12%">Aksi</th>
         </tr>
       </thead>
       <tbody>
@@ -75,8 +77,12 @@
       <td class="text-center">{{$inven->nama_produk}}</td>
       <td class="text-center">{{$inven->spesifikasi}}</td>
       <td class="text-center">
-      <img src="{{ asset($inven->image) }}" alt="Gambar Produk" class="img-fluid" style="max-width: 100px;">
-      </td>
+    <a href="{{ asset($inven->image) }}" data-lightbox="inventory" data-title="{{ $inven->nama_produk }}">
+        <img src="{{ asset($inven->image) }}" alt="Gambar Produk" class="img-fluid img-thumbnail" style="max-width: 100px; cursor: pointer;">
+    </a>
+</td>
+
+
       <td class="text-center">{{$inven->satuan}}</td>
       <td class="text-center">{{$inven->harga_jual}}</td>
       <td class="text-center">{{$inven->stock}}</td> <!-- Tampilkan data stock -->
@@ -84,12 +90,11 @@
       <button class="btn btn-warning btn-sm" onclick="editInventory(this)" data-uuid="{{ $inven->uuid }}">
       <i class="bi bi-pencil-square"></i>
       </button>
-
-      <a class="btn btn-warning" href="#"><i class="bi bi-eye"></i></a>
+      </button>
       <form class="d-inline" onsubmit="deleteInventory(event)" data-uuid="{{ $inven->uuid }}">
       @csrf
       @method('delete')
-      <button type="submit" class="btn btn-danger">
+      <button type="submit" class="btn btn-danger btn-sm">
         <i class="bi bi-trash"></i>
       </button>
       </form>
