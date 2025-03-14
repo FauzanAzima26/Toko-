@@ -149,7 +149,7 @@ const deleteInventory = (e) => {
                 success: function (response) {
                     if (response.success) {
                         toastSuccess(response.message); // Tampilkan pesan sukses
-                        reloadTable(); // Reload tabel untuk menampilkan data terbaru
+                        location.reload();
                     }
                 },
                 error: function (jqXHR) {
