@@ -30,8 +30,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="image" class="form-label">Gambar Produk</label>
-                        <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                        <img id="imagePreview" src="" alt="Preview Gambar" class="img-fluid mt-2"
+                            style="max-height: 150px; display: none;">
                     </div>
+
                     <div class="mb-3">
                         <label for="satuan" class="form-label">Satuan</label>
                         <select class="form-select" id="satuan" name="satuan" required>

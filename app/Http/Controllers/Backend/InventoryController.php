@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\service\inventorySevice;
+use App\Http\Requests\inventoryRequest;
 use Illuminate\Support\Facades\Storage;
 
 class InventoryController extends Controller
@@ -37,7 +38,7 @@ class InventoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(inventoryRequest $request)
     {
         // Validasi data
         $request->validate([
@@ -94,7 +95,7 @@ class InventoryController extends Controller
         //
     }
 
-    public function update(Request $request, string $uuid)
+    public function update(inventoryRequest $request, string $uuid)
     {
         // Validasi data
         $data = $request->validate([
@@ -103,7 +104,7 @@ class InventoryController extends Controller
             'spesifikasi' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'satuan' => 'required|in:pcs,kg,liter,meter',
-            'stock' => 'required|integer|min:0', // Validasi untuk stock
+            'stock' => 'required|integer|min:0',
         ]);
     
         // Mencari inventaris berdasarkan UUID
@@ -114,24 +115,22 @@ class InventoryController extends Controller
         }
     
         try {
-            if (!empty($inventory->image)) {
-                // Ambil path lama tanpa 'storage/'
-                $oldImagePath = str_replace('storage/', '', $inventory->image);
-    
-                // Cek apakah file ada sebelum dihapus
-                if (Storage::disk('public')->exists($oldImagePath)) {
-                    Storage::disk('public')->delete($oldImagePath);
-                } else {
-                    Log::error('File not found: ' . $oldImagePath);
-                }
-            }
-    
-            // Simpan gambar baru jika ada
+            // Cek apakah ada gambar baru yang diunggah
             if ($request->hasFile('image')) {
+                // Hapus gambar lama jika ada gambar baru
+                if (!empty($inventory->image)) {
+                    $oldImagePath = str_replace('storage/', '', $inventory->image);
+                    if (Storage::disk('public')->exists($oldImagePath)) {
+                        Storage::disk('public')->delete($oldImagePath);
+                    }
+                }
+    
+                // Simpan gambar baru
                 $imagePath = $request->file('image')->store('images', 'public');
                 $data['image'] = 'storage/' . $imagePath;
             } else {
-                unset($data['image']);
+                // Jika tidak ada gambar baru, gunakan gambar lama
+                $data['image'] = $inventory->image;
             }
     
             // Update inventaris dengan data baru
@@ -147,6 +146,7 @@ class InventoryController extends Controller
             return response()->json(['message' => 'Terjadi kesalahan saat memperbarui inventaris.'], 500);
         }
     }
+    
     
     
 

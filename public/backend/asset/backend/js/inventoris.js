@@ -55,7 +55,7 @@ $("#formInventory").on("submit", function (e) {
 });
 
 const editInventory = (e) => {
-    let uuid = e.getAttribute("data-uuid"); // Gunakan UUID sebagai pengganti ID
+    let uuid = e.getAttribute("data-uuid"); // Ambil UUID dari tombol edit
     console.log("Editing inventory with UUID:", uuid);
 
     startLoading();
@@ -64,7 +64,7 @@ const editInventory = (e) => {
 
     $.ajax({
         type: "GET",
-        url: "/admin/inventaris/" + uuid, // Gunakan UUID dalam URL
+        url: "/admin/inventaris/" + uuid, // Ambil data inventaris berdasarkan UUID
         success: function (response) {
             if (!response.data) {
                 console.error("Data not found in response");
@@ -75,19 +75,25 @@ const editInventory = (e) => {
             let parsedData = response.data;
 
             // Isi form dengan data yang diterima
-            $("#id").val(parsedData.uuid); // Gunakan UUID sebagai ID
+            $("#id").val(parsedData.uuid);
             $("#nama_produk").val(parsedData.nama_produk);
             $("#spesifikasi").val(parsedData.spesifikasi);
             $("#harga_jual").val(parsedData.harga_jual);
             $("#satuan").val(parsedData.satuan);
-            $("#stock").val(parsedData.stock); // Isi field stock
+            $("#stock").val(parsedData.stock);
+
+            // Menampilkan gambar yang sudah ada
+            if (parsedData.image) {
+                $("#imagePreview").attr("src", "/" + parsedData.image).show(); // Pastikan path benar
+            } else {
+                $("#imagePreview").hide();
+            }
 
             // Set judul modal dan teks tombol untuk mode edit
             $(".modal-title").html('<i class="fa fa-edit"></i> Edit Inventaris');
             $(".btnSubmit").html('<i class="fa fa-save"></i> Update');
 
             submitMethod = "edit"; // Set mode ke "edit"
-
             $("#inventarisModal").modal("show"); // Tampilkan modal
             stopLoading();
         },
@@ -98,6 +104,7 @@ const editInventory = (e) => {
         },
     });
 };
+
 
 $("#inventarisModal").on("show.bs.modal", function () {
     if (submitMethod !== "edit") {
@@ -160,3 +167,13 @@ const deleteInventory = (e) => {
         }
     });
 };
+
+$("#image").on("change", function (event) {
+    let reader = new FileReader();
+    reader.onload = function () {
+        $("#imagePreview").attr("src", reader.result).show();
+    };
+    if (event.target.files[0]) {
+        reader.readAsDataURL(event.target.files[0]);
+    }
+});
