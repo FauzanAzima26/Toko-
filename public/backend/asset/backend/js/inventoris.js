@@ -1,40 +1,39 @@
 let submitMethod;
 
 const modalInventory = () => {
-    submitMethod = "create"; // Pastikan mode diubah ke "create"
+    submitMethod = "create"; // Mode diubah ke "create"
 
     resetForm("#formInventory"); // Reset semua input form
     $("#id").val(""); // Kosongkan ID agar tidak terbawa dari edit
-    $("#image").val(null); // Kosongkan file input agar tidak ada gambar lama
+    $("#image").val(null); // Kosongkan input file agar tidak ada gambar lama
+    $("#imagePreview").attr("src", "").hide(); // Hilangkan preview gambar
     $("#stock").val(""); // Kosongkan field stock
 
-    // Pastikan semua elemen modal diubah ke mode "Create"
-    $(".modal-title").html('<i class="fa fa-plus"></i> Tambah Inventaris'); // Set judul modal
-    $(".btnSubmit").html('<i class="fa fa-save"></i> Simpan'); // Set teks tombol
+    // Ubah elemen modal ke mode "Create"
+    $(".modal-title").html('<i class="fa fa-plus"></i> Tambah Inventaris');
+    $(".btnSubmit").html('<i class="fa fa-save"></i> Simpan');
 
     resetValidation(); // Reset validasi jika ada
     $("#inventarisModal").modal("show"); // Tampilkan modal
 };
 
+// Form submit
 $("#formInventory").on("submit", function (e) {
-    e.preventDefault(); // Mencegah pengiriman form default
-    startLoading(); // Mulai loading
+    e.preventDefault(); // Hindari submit default
+    startLoading(); // Aktifkan loading
 
-    let url, method;
-    url = "/admin/inventaris"; // URL default untuk menyimpan data
-    method = "POST"; // Metode default
+    let url = "/admin/inventaris";
+    let method = "POST"; // Default method
 
-    const dataInput = new FormData(this); // Ambil data dari form
+    const dataInput = new FormData(this); // Ambil data form
 
-    if (submitMethod == "edit") {
-        url = "/admin/inventaris/" + $("#id").val(); // URL untuk mengupdate
-        dataInput.append("_method", "PUT"); // Tambahkan metode PUT
+    if (submitMethod === "edit") {
+        url = "/admin/inventaris/" + $("#id").val(); // Gunakan endpoint update
+        dataInput.append("_method", "PUT"); // Gunakan PUT untuk update
     }
 
     $.ajax({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"), // CSRF token
-        },
+        headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
         type: method,
         url: url,
         data: dataInput,
@@ -42,29 +41,30 @@ $("#formInventory").on("submit", function (e) {
         processData: false,
         success: function (response) {
             $("#inventarisModal").modal("hide"); // Sembunyikan modal
-            reloadTable(); // Reload tabel untuk menampilkan data terbaru
-            toastSuccess(response.message); // Tampilkan pesan sukses
+            reloadTable(); // Perbarui tabel
+            toastSuccess(response.message); // Tampilkan notifikasi sukses
             resetValidation(); // Reset validasi
             location.reload();
         },
         error: function (jqXHR) {
-            console.log(jqXHR.responseText); // Log error
-            toastError(jqXHR.responseText); // Tampilkan pesan error
+            console.log(jqXHR.responseText);
+            toastError(jqXHR.responseText);
         },
     });
 });
 
+// Fungsi edit
 const editInventory = (e) => {
-    let uuid = e.getAttribute("data-uuid"); // Ambil UUID dari tombol edit
+    let uuid = e.getAttribute("data-uuid");
     console.log("Editing inventory with UUID:", uuid);
 
     startLoading();
-    resetForm("#formInventory"); // Reset form
-    resetValidation(); // Reset validasi
+    resetForm("#formInventory");
+    resetValidation();
 
     $.ajax({
         type: "GET",
-        url: "/admin/inventaris/" + uuid, // Ambil data inventaris berdasarkan UUID
+        url: "/admin/inventaris/" + uuid,
         success: function (response) {
             if (!response.data) {
                 console.error("Data not found in response");
@@ -74,7 +74,7 @@ const editInventory = (e) => {
 
             let parsedData = response.data;
 
-            // Isi form dengan data yang diterima
+            // Isi form dengan data dari server
             $("#id").val(parsedData.uuid);
             $("#nama_produk").val(parsedData.nama_produk);
             $("#spesifikasi").val(parsedData.spesifikasi);
@@ -82,19 +82,19 @@ const editInventory = (e) => {
             $("#satuan").val(parsedData.satuan);
             $("#stock").val(parsedData.stock);
 
-            // Menampilkan gambar yang sudah ada
+            // Tampilkan gambar jika ada
             if (parsedData.image) {
-                $("#imagePreview").attr("src", "/" + parsedData.image).show(); // Pastikan path benar
+                $("#imagePreview").attr("src", "/" + parsedData.image).show();
             } else {
                 $("#imagePreview").hide();
             }
 
-            // Set judul modal dan teks tombol untuk mode edit
+            // Set mode edit
             $(".modal-title").html('<i class="fa fa-edit"></i> Edit Inventaris');
             $(".btnSubmit").html('<i class="fa fa-save"></i> Update');
 
-            submitMethod = "edit"; // Set mode ke "edit"
-            $("#inventarisModal").modal("show"); // Tampilkan modal
+            submitMethod = "edit";
+            $("#inventarisModal").modal("show");
             stopLoading();
         },
         error: function (jqXHR) {
@@ -105,36 +105,37 @@ const editInventory = (e) => {
     });
 };
 
-
+// Reset modal saat dibuka
 $("#inventarisModal").on("show.bs.modal", function () {
     if (submitMethod !== "edit") {
-        // Jika bukan mode edit, reset ke mode create
         submitMethod = "create";
-        $("#formInventory")[0].reset(); // Kosongkan semua input form
-        $("#id").val(""); // Kosongkan hidden input ID
+        resetForm("#formInventory"); // Reset form
+        $("#id").val("");
         $("#image").val(null); // Kosongkan input file
-        $("#stock").val(""); // Kosongkan field stock
-        resetValidation(); // Reset validasi agar tidak ada error lama
-        $(".modal-title").html('<i class="fa fa-plus"></i> Tambah Inventaris'); // Set judul modal
-        $(".btnSubmit").html('<i class="fa fa-save"></i> Simpan'); // Set teks tombol
+        $("#imagePreview").attr("src", "").hide(); // Reset preview gambar
+        $("#stock").val("");
+        resetValidation();
+        $(".modal-title").html('<i class="fa fa-plus"></i> Tambah Inventaris');
+        $(".btnSubmit").html('<i class="fa fa-save"></i> Simpan');
     }
 });
 
+// Reset modal saat ditutup
 $("#inventarisModal").on("hidden.bs.modal", function () {
-    submitMethod = "create"; // Pastikan kembali ke mode Create setiap modal ditutup
-    $("#formInventory")[0].reset(); // Kosongkan semua input form
-    $("#id").val(""); // Kosongkan hidden input ID
-    $("#image").val(null); // Kosongkan input file
-    $("#stock").val(""); // Kosongkan field stock
-    resetValidation(); // Reset validasi agar tidak ada error lama
+    submitMethod = "create"; // Pastikan kembali ke mode Create
+    resetForm("#formInventory");
+    $("#id").val("");
+    $("#image").val(null);
+    $("#imagePreview").attr("src", "").hide(); // Pastikan gambar dihapus
+    $("#stock").val("");
+    resetValidation();
 });
 
-
+// Fungsi hapus inventaris
 const deleteInventory = (e) => {
-    e.preventDefault(); // Mencegah form submit default
+    e.preventDefault();
 
-    const uuid = e.target.getAttribute("data-uuid"); // Ambil UUID dari tombol delete
-    const form = e.target.closest("form"); // Ambil form terdekat
+    const uuid = e.target.getAttribute("data-uuid");
 
     Swal.fire({
         title: 'Apakah Anda yakin?',
@@ -148,26 +149,25 @@ const deleteInventory = (e) => {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"), // CSRF token
-                },
+                headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
                 type: "DELETE",
-                url: `/admin/inventaris/${uuid}`, // URL untuk delete
+                url: `/admin/inventaris/${uuid}`,
                 success: function (response) {
                     if (response.success) {
-                        toastSuccess(response.message); // Tampilkan pesan sukses
+                        toastSuccess(response.message);
                         location.reload();
                     }
                 },
                 error: function (jqXHR) {
                     console.log("Error:", jqXHR.responseText);
-                    toastError(jqXHR.responseText); // Tampilkan pesan error
+                    toastError(jqXHR.responseText);
                 },
             });
         }
     });
 };
 
+// Preview gambar saat memilih file baru
 $("#image").on("change", function (event) {
     let reader = new FileReader();
     reader.onload = function () {
