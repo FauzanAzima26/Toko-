@@ -84,7 +84,7 @@
 
 
       <td class="text-center">{{$inven->satuan}}</td>
-      <td class="text-center">Rp. {{ number_format($inven->harga_jual, 0, ',', '.') }}</td>
+      <td class="text-center">Rp.{{ number_format($inven->harga_jual, 0, ',', '.') }}</td>
       <td class="text-center">{{$inven->stock}}</td> <!-- Tampilkan data stock -->
       <td class="text-center">
       <button class="btn btn-warning btn-sm" onclick="editInventory(this)" data-uuid="{{ $inven->uuid }}">

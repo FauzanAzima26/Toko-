@@ -18,7 +18,7 @@
 						<a class="product-item" href="cart.html">
 							<img src="{{ asset($produk->image) }}" class="img-fluid product-thumbnail">
 							<h3 class="product-title">{{ $produk->nama_produk }}</h3>
-							<strong class="product-price">Rp. {{ number_format($produk->harga_jual, 0, ',', '.') }}</strong>
+							<strong class="product-price">Rp.{{ number_format($produk->harga_jual, 0, ',', '.') }}</strong>
 
 							<span class="icon-cross">
 								<img src="{{ asset('frontend') }}/images/cross.svg" class="img-fluid">
