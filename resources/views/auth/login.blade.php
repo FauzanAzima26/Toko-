@@ -45,11 +45,17 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <label for="password"
-                                        class="form-label">{{ __('Password') }}</label>
-                                    <input id="password" type="password"
-                                        class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="current-password">
+                                    <label for="password" class="form-label">{{ __('Password') }}</label>
+                                    <div style="position: relative;">
+                                        <input id="password" type="password"
+                                            class="form-control @error('password') is-invalid @enderror" name="password"
+                                            required autocomplete="current-password">
+                                        <span onclick="togglePassword('password')" class="toggle-password"
+                                            style="right: 10px;">
+                                            <i class="bi bi-eye"></i>
+                                        </span>
+                                    </div>
+
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -102,5 +108,32 @@
         </div>
 
     </section>
+
+    <script>
+        function togglePassword(fieldId) {
+            var field = document.getElementById(fieldId);
+            var icon = document.querySelector(`#${fieldId} + .toggle-password i`);
+
+            if (field.type === "password") {
+                field.type = "text";
+                icon.classList.remove("bi-eye");
+                icon.classList.add("bi-eye-slash");
+            } else {
+                field.type = "password";
+                icon.classList.remove("bi-eye-slash");
+                icon.classList.add("bi-eye");
+            }
+        }
+    </script>
+
+    <style>
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
 
 @endsection
