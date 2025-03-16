@@ -5,8 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\logController;
 use App\Http\Controllers\Frontend\homeController;
 use App\Http\Controllers\Backend\InventoryController;
+use App\Http\Controllers\frontend\cartController;
 
 Route::get('/', [homeController::class, 'index'])->name('frontend.home');
+
+Route::get('/cart', [cartController::class, 'index'])->name('frontend.cart');
 
 Auth::routes();
 

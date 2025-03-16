@@ -11,8 +11,8 @@
 
         <div class="collapse navbar-collapse" id="navbarsFurni">
             <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Home</a>
+                <li class="nav-item {{ request()->routeIs('frontend.home') ? 'active' : 'collapsed' }}">
+                    <a class="nav-link" href="{{ route('frontend.home') }}">Home</a>
                 </li>
                 <li><a class="nav-link" href="shop.html">Shop</a></li>
                 <li><a class="nav-link" href="about.html">About us</a></li>
@@ -41,7 +41,8 @@
                         @endguest
                     </ul>
                 </li>
-                <li><a class="nav-link" href="cart.html"><img src="{{ asset('frontend') }}/images/cart.svg"></a></li>
+                <li><a class="nav-link" href="{{ route('frontend.cart') }}"><img
+                            src="{{ asset('frontend') }}/images/cart.svg"></a></li>
             </ul>
 
         </div>

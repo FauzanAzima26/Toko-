@@ -40,6 +40,8 @@
 
 	@include('frontend.template.footer')
 
+	@yield('content')
+
 
 	<script src="{{ asset('frontend') }}/js/bootstrap.bundle.min.js"></script>
 	<script src="{{ asset('frontend') }}/js/tiny-slider.js"></script>
