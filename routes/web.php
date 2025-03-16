@@ -17,3 +17,5 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     Route::get('log', [logController::class, 'index'])->name('log');
 });
+
+Route::get('/home', [App\Http\Controllers\Frontend\homeController::class, 'index'])->name('home');
