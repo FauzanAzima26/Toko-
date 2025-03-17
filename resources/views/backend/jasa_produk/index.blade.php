@@ -13,7 +13,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
   <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
-  <script src="{{ asset('backend/asset/backend/js/produktoris.js') }}"></script>
+  <script src="{{ asset('backend/asset/backend/js/jasa.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
   <script src="{{ asset('backend/asset/backend/js/helper.js') }}"></script>
   <script>
@@ -44,7 +44,7 @@
     <div class="card">
       <div class="card-header d-flex justify-content-between align-items-center">
       <span>Jasa/Produk</span>
-      <button type="button" class="btn btn-success mx-3" data-bs-toggle="modal" data-bs-target="#produktarisModal">
+      <button type="button" class="btn btn-success mx-3" data-bs-toggle="modal" data-bs-target="#jasaModal">
         Create
       </button>
       </div>
@@ -73,7 +73,7 @@
       {{($jasa->currentPage() - 1) * $jasa->perPage() + $loop->iteration}}
       </td>
       <td class="text-center">{{$produk->jasa_produk}}</td>
-      <td class="text-center">{{$produk->harga}}</td>
+      <td class="text-center">Rp.{{ number_format($produk->harga, 0, ',', '.') }}</td>
       <td class="text-center">
       <a href="{{ asset($produk->image) }}" data-lightbox="produktory" data-title="{{ $produk->jasa_produk }}">
       <img src="{{ asset($produk->image) }}" alt="Gambar Produk" class="img-fluid img-thumbnail"
@@ -82,7 +82,7 @@
       </td>
       <td class="text-center">{{$produk->deskripsi}}</td>
       <td class="text-center">
-      <button class="btn btn-warning btn-sm" onclick="editproduktory(this)" data-uuid="{{ $produk->uuid }}">
+      <button class="btn btn-warning btn-sm" onclick="editJasa(this)" data-uuid="{{ $produk->uuid }}">
       <i class="bi bi-pencil-square"></i>
       </button>
       <form class="d-inline" onsubmit="deleteproduktory(event)" data-uuid="{{ $produk->uuid }}">
@@ -103,5 +103,7 @@
     </div>
     </div>
   </section>
+
+  @include ('backend.jasa_produk._modal')
 
 @endsection
