@@ -13,7 +13,7 @@ class homeController extends Controller
      */
     public function index()
     {
-        $getData = Inventory::latest()->get();
+        $getData = Inventory::latest()->take(3)->get();
         return view('frontend.template.main', [
             'produck' => $getData
         ]);

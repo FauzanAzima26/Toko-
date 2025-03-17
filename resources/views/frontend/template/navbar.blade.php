@@ -14,7 +14,9 @@
                 <li class="nav-item {{ request()->routeIs('frontend.home') ? 'active' : 'collapsed' }}">
                     <a class="nav-link" href="{{ route('frontend.home') }}">Home</a>
                 </li>
-                <li><a class="nav-link" href="shop.html">Shop</a></li>
+                <li class="nav-item {{ request()->routeIs('frontend.shop') ? 'active' : 'collapsed' }}">
+                    <a class="nav-link" href="{{ route('frontend.shop') }}">Shop</a>
+                </li>
                 <li><a class="nav-link" href="about.html">About us</a></li>
                 <li><a class="nav-link" href="services.html">Services</a></li>
                 <li><a class="nav-link" href="blog.html">Blog</a></li>
@@ -41,7 +43,7 @@
                         @endguest
                     </ul>
                 </li>
-                <li><a class="nav-link" href="{{ route('frontend.cart') }}"><img
+                <li><a class="nav-link" href="{{ route('frontend.cart.index') }}"><img
                             src="{{ asset('frontend') }}/images/cart.svg"></a></li>
             </ul>
 
