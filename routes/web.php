@@ -6,9 +6,6 @@ use App\Http\Controllers\Backend\logController;
 use App\Http\Controllers\Backend\InventoryController;
 use App\Http\Controllers\Auth\LoginController;
 
-Route::get('/', function () {
-    return view('auth.login');
-});
 
 Auth::routes();
 
@@ -18,4 +15,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('log', [logController::class, 'index'])->name('log');
 });
 
-Route::get('/home', [App\Http\Controllers\Frontend\homeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\Frontend\homeController::class, 'index'])->name('home');
+
+Route::get('/cart', [App\Http\Controllers\Frontend\cartController::class, 'index'])->name('Frontend.cart');

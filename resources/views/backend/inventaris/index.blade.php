@@ -43,7 +43,7 @@
     <div class="row">
     <div class="card">
       <div class="card-header d-flex justify-content-between align-items-center">
-      <span>Inventaris</span>
+      <span>Jasa & Produk</span>
       <button type="button" class="btn btn-success mx-3" data-bs-toggle="modal" data-bs-target="#inventarisModal">
         Create
       </button>

@@ -23,7 +23,8 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 	<link href="{{ asset('frontend') }}/css/tiny-slider.css" rel="stylesheet">
 	<link href="{{ asset('frontend') }}/css/style.css" rel="stylesheet">
-	<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
+	@stack('css')
+	<title>Percetakan Unimal</title>
 </head>
 
 <body>
@@ -44,6 +45,7 @@
 	<script src="{{ asset('frontend') }}/js/bootstrap.bundle.min.js"></script>
 	<script src="{{ asset('frontend') }}/js/tiny-slider.js"></script>
 	<script src="{{ asset('frontend') }}/js/custom.js"></script>
+	@stack ('js')
 </body>
 
 </html>

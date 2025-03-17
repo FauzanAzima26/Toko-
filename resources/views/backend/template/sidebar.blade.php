@@ -7,7 +7,7 @@
       <a class="nav-link {{ request()->routeIs('admin.inventaris.index') ? 'active' : 'collapsed' }}"
         href="{{ route('admin.inventaris.index') }}">
         <i class="bi bi-grid"></i>
-        <span>Inventaris</span>
+        <span>Jasa & Produk</span>
       </a>
     </li><!-- End Dashboard Nav -->
 
