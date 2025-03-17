@@ -7,6 +7,7 @@ use App\Http\Controllers\frontend\cartController;
 use App\Http\Controllers\Frontend\homeController;
 use App\Http\Controllers\Frontend\shopController;
 use App\Http\Controllers\Backend\InventoryController;
+use App\Http\Controllers\Backend\jasa_produkController;
 
 Route::get('/', [homeController::class, 'index'])->name('frontend.home');
 
@@ -18,6 +19,7 @@ Auth::routes();
 
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::resource('inventaris', InventoryController::class)->names('admin.inventaris');
+    Route::resource('jasa_produk', jasa_produkController::class)->names('admin.jasa_produk');
 
     Route::get('log', [logController::class, 'index'])->name('log');
 });

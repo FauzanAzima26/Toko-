@@ -21,7 +21,7 @@
 </div>
 <!-- End Hero Section -->
 
-<style>
+<!-- <style>
     /* Hero Section Styling */
     .hero {
         background-image: url("{{ asset('frontend') }}/images/person-1.png");
@@ -96,4 +96,4 @@
             font-size: 16px;
         }
     }
-</style>
+</style> -->

@@ -18,6 +18,13 @@
       </a>
     </li><!-- End Log Harian Nav -->
 
+    <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('admin.jasa_produk.index') ? 'active' : 'collapsed' }}" href="{{ route('admin.jasa_produk.index') }}">
+        <i class="bi bi-grid"></i>
+        <span>Jasa/Produk</span>
+      </a>
+    </li><!-- End Jasa/Produk Nav -->
+
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
