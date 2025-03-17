@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('spesifikasi');
             $table->string('image');
             $table->string('satuan');
-            $table->integer('harga_jual');
             $table->timestamps();
         });
 

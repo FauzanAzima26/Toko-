@@ -15,7 +15,6 @@ class Inventory extends Model
         'spesifikasi',
         'image',
         'satuan',
-        'harga_jual',
         'stock'
     ];
 

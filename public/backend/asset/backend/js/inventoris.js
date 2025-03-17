@@ -78,7 +78,6 @@ const editInventory = (e) => {
             $("#id").val(parsedData.uuid);
             $("#nama_produk").val(parsedData.nama_produk);
             $("#spesifikasi").val(parsedData.spesifikasi);
-            $("#harga_jual").val(parsedData.harga_jual);
             $("#satuan").val(parsedData.satuan);
             $("#stock").val(parsedData.stock);
 

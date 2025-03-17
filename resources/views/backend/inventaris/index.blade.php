@@ -63,8 +63,7 @@
         <th class="text-center">Spesifikasi</th>
         <th class="text-center">Gambar Produk</th>
         <th class="text-center">Satuan</th>
-        <th class="text-center">Harga Jual</th>
-        <th class="text-center">Stock</th> <!-- Tambahkan kolom Stock -->
+        <th class="text-center">Stock</th> <!-- Kolom Stock -->
         <th class="text-center" width="12%">Aksi</th>
         </tr>
       </thead>
@@ -77,19 +76,16 @@
       <td class="text-center">{{$inven->nama_produk}}</td>
       <td class="text-center">{{$inven->spesifikasi}}</td>
       <td class="text-center">
-    <a href="{{ asset($inven->image) }}" data-lightbox="inventory" data-title="{{ $inven->nama_produk }}">
-        <img src="{{ asset($inven->image) }}" alt="Gambar Produk" class="img-fluid img-thumbnail" style="max-width: 100px; cursor: pointer;">
-    </a>
-</td>
-
-
+      <a href="{{ asset($inven->image) }}" data-lightbox="inventory" data-title="{{ $inven->nama_produk }}">
+      <img src="{{ asset($inven->image) }}" alt="Gambar Produk" class="img-fluid img-thumbnail"
+        style="max-width: 100px; cursor: pointer;">
+      </a>
+      </td>
       <td class="text-center">{{$inven->satuan}}</td>
-      <td class="text-center">Rp.{{ number_format($inven->harga_jual, 0, ',', '.') }}</td>
       <td class="text-center">{{$inven->stock}}</td> <!-- Tampilkan data stock -->
       <td class="text-center">
       <button class="btn btn-warning btn-sm" onclick="editInventory(this)" data-uuid="{{ $inven->uuid }}">
       <i class="bi bi-pencil-square"></i>
-      </button>
       </button>
       <form class="d-inline" onsubmit="deleteInventory(event)" data-uuid="{{ $inven->uuid }}">
       @csrf

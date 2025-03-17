@@ -23,7 +23,6 @@ class inventoryRequest extends FormRequest
     {
         return [
             'nama_produk' => 'required|string|max:255',
-            'harga_jual' => 'required|numeric',
             'spesifikasi' => 'required|string',
             "image" => $this->isMethod('POST') ? "required|file|image|max:2048|mimes:png,jpg,jpeg,webp|mimetypes:image/png,image/jpg,image/jpeg,image/webp" : "nullable|file|image|max:2048|mimes:png,jpg,jpeg,webp|mimetypes:image/png,image/jpg,image/jpeg,image/webp",
             'satuan' => 'required|in:pcs,kg,liter,meter',

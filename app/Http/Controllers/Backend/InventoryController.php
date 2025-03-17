@@ -43,7 +43,6 @@ class InventoryController extends Controller
         // Validasi data
         $request->validate([
             'nama_produk' => 'required|string|max:255',
-            'harga_jual' => 'required|numeric',
             'spesifikasi' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'satuan' => 'required|in:pcs,kg,liter,meter',
@@ -57,7 +56,6 @@ class InventoryController extends Controller
         // Membuat entri baru di database
         $inventory = Inventory::create([
             'nama_produk' => $request->nama_produk,
-            'harga_jual' => $request->harga_jual,
             'spesifikasi' => $request->spesifikasi,
             'image' => $imageFullPath,
             'satuan' => $request->satuan,
@@ -100,7 +98,6 @@ class InventoryController extends Controller
         // Validasi data
         $data = $request->validate([
             'nama_produk' => 'required|string|max:255',
-            'harga_jual' => 'required|numeric',
             'spesifikasi' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'satuan' => 'required|in:pcs,kg,liter,meter',
@@ -147,9 +144,6 @@ class InventoryController extends Controller
         }
     }
     
-    
-    
-
     public function destroy(string $uuid)
     {
         try {
