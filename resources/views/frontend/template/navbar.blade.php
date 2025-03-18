@@ -18,8 +18,6 @@
                     <a class="nav-link" href="{{ route('frontend.shop') }}">Shop</a>
                 </li>
                 <li><a class="nav-link" href="about.html">About us</a></li>
-                <li><a class="nav-link" href="services.html">Services</a></li>
-                <li><a class="nav-link" href="blog.html">Blog</a></li>
                 <li><a class="nav-link" href="contact.html">Contact us</a></li>
             </ul>
 
@@ -32,6 +30,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" id="dropdownMenu">
                         @guest
                             <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
+                            <li><a class="dropdown-item" href="{{ route('register') }}">Register</a></li>
                         @else
                             <li><a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

@@ -28,7 +28,14 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/inventaris';
+    protected function redirectTo()
+    {
+        if (auth()->user()->role === 'customer') {
+            return '/';
+        }
+        return '/admin/inventaris';
+    }
+
 
     /**
      * Create a new controller instance.
@@ -67,6 +74,8 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role' => $data['role'] ?? 'customer', // Default ke 'customer' jika tidak ditentukan
         ]);
     }
+
 }
