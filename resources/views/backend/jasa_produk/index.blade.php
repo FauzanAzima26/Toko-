@@ -85,7 +85,7 @@
       <button class="btn btn-warning btn-sm" onclick="editJasa(this)" data-uuid="{{ $produk->uuid }}">
       <i class="bi bi-pencil-square"></i>
       </button>
-      <form class="d-inline" onsubmit="deleteproduktory(event)" data-uuid="{{ $produk->uuid }}">
+      <form class="d-inline" onsubmit="deleteJasa(event)" data-uuid="{{ $produk->uuid }}">
       @csrf
       @method('delete')
       <button type="submit" class="btn btn-danger btn-sm">

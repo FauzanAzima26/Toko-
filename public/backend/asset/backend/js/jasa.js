@@ -128,3 +128,38 @@ $("#image").on("change", function (event) {
         reader.readAsDataURL(event.target.files[0]);
     }
 });
+
+const deleteJasa = (e) => {
+    e.preventDefault();
+
+    const uuid = e.target.getAttribute("data-uuid");
+
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: "Data yang dihapus tidak dapat dikembalikan!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
+                type: "DELETE",
+                url: `/admin/jasa_produk/${uuid}`,
+                success: function (response) {
+                    if (response.success) {
+                        toastSuccess(response.message);
+                        location.reload();
+                    }
+                },
+                error: function (jqXHR) {
+                    console.log("Error:", jqXHR.responseText);
+                    toastError(jqXHR.responseText);
+                },
+            });
+        }
+    });
+};

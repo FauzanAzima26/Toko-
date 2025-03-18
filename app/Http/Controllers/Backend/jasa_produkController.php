@@ -112,5 +112,36 @@ class jasa_produkController extends Controller
             return response()->json(['message' => 'Terjadi kesalahan saat memperbarui jasa/produk.'], 500);
         }
     }
+
+    public function destroy(string $uuid)
+    {
+        try {
+            // Cari data berdasarkan UUID
+            $jasa = Jasa__Produk::where('uuid', $uuid)->first();
+    
+            if (!$jasa) {
+                return response()->json(['message' => 'Data tidak ditemukan.'], 404);
+            }
+    
+            // Hapus gambar dari storage jika ada
+            if (!empty($jasa->image)) {
+                $oldImagePath = str_replace('storage/', '', $jasa->image);
+                if (Storage::disk('public')->exists($oldImagePath)) {
+                    Storage::disk('public')->delete($oldImagePath);
+                }
+            }
+    
+            // Hapus data dari database
+            $jasa->delete();
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Inventaris berhasil dihapus!',
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error deleting jasa: ' . $e->getMessage());
+            return response()->json(['message' => 'Terjadi kesalahan saat menghapus data.'], 500);
+        }
+    }
     
 }

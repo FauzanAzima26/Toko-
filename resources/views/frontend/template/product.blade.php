@@ -19,8 +19,8 @@
 				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
 					<a class="product-item" href="#" data-bs-toggle="modal" data-bs-target="#imageModal{{ $produk->id }}">
 						<img src="{{ asset($produk->image) }}" class="img-fluid product-thumbnail">
-						<h3 class="product-title">{{ $produk->nama_produk }}</h3>
-						<strong class="product-price">Rp.{{ number_format($produk->harga_jual, 0, ',', '.') }}</strong>
+						<h3 class="product-title">{{ $produk->jasa_produk }}</h3>
+						<strong class="product-price">Rp.{{ number_format($produk->harga, 0, ',', '.') }}</strong>
 					</a>
 				</div>
 

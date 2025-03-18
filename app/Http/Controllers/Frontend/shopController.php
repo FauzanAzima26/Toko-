@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Models\Inventory;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Jasa__Produk;
 
 class shopController extends Controller
 {
     public function index()
     {
-        $getData = Inventory::latest()->get();
+        $getData = Jasa__Produk::latest()->get();
         return view('frontend.shop', [
             'produck' => $getData
         ]);

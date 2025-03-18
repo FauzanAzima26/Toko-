@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Inventory;
+use App\Models\Jasa__Produk;
 use Illuminate\Http\Request;
 
 class homeController extends Controller
@@ -13,7 +14,7 @@ class homeController extends Controller
      */
     public function index()
     {
-        $getData = Inventory::latest()->take(3)->get();
+        $getData = Jasa__Produk::latest()->take(3)->get();
         return view('frontend.template.main', [
             'produck' => $getData
         ]);

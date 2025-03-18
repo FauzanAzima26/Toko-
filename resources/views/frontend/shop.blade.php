@@ -16,8 +16,8 @@
                 <div class="col-12 col-md-4 col-lg-3 mb-5">
                 <a class="product-item" href="{{ route('frontend.cart.index', $data->id) }}">
                     <img src="{{ asset($data->image) }}" class="img-fluid product-thumbnail">
-                    <h3 class="product-title">{{ $data->nama_produk }}</h3>
-                    <strong class="product-price">Rp.{{ number_format($data->harga_jual, 0, ',', '.') }}</strong>
+                    <h3 class="product-title">{{ $data->jasa_produk }}</h3>
+                    <strong class="product-price">Rp.{{ number_format($data->harga, 0, ',', '.') }}</strong>
 
                     <span class="icon-cross">
                         <img src="{{ asset('frontend') }}/images/cross.svg" class="img-fluid">
