@@ -6,14 +6,16 @@ use App\Http\Controllers\Backend\logController;
 use App\Http\Controllers\frontend\cartController;
 use App\Http\Controllers\Frontend\homeController;
 use App\Http\Controllers\Frontend\shopController;
+use App\Http\Controllers\Frontend\aboutController;
+use App\Http\Controllers\Frontend\contactController;
 use App\Http\Controllers\Backend\InventoryController;
 use App\Http\Controllers\Backend\jasa_produkController;
-use App\Http\Controllers\Frontend\aboutController;
 
 Route::get('/', [homeController::class, 'index'])->name('frontend.home');
 Route::get('/shop', [shopController::class, 'index'])->name('frontend.shop');
 Route::resource('cart', cartController::class)->names('frontend.cart');
 Route::get('/about', [aboutController::class, 'index'])->name('frontend.about');
+Route::get('/contact', [contactController::class, 'index'])->name('frontend.contact');
 
 Auth::routes();
 

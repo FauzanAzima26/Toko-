@@ -20,7 +20,9 @@
                 <li class="nav-item {{ request()->routeIs('frontend.about') ? 'active' : 'collapsed' }}">
                     <a class="nav-link" href="{{ route('frontend.about') }}">About us</a>
                 </li>
-                <li><a class="nav-link" href="contact.html">Contact us</a></li>
+                <li class="nav-item {{ request()->routeIs('frontend.contact') ? 'active' : 'collapsed' }}">
+                    <a class="nav-link" href="{{ route('frontend.contact') }}">Contact us</a>
+                </li>
             </ul>
 
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">

@@ -16,8 +16,7 @@
                     <p class="mb-4">Kami siap melayani Anda dengan keramahan terbaik. Pesanan Anda akan dikerjakan oleh
                         tenaga profesional menggunakan mesin berteknologi modern untuk hasil yang maksimal. Kami juga
                         menjamin setiap order cetak selesai tepat waktu sesuai kesepakatan!</p>
-                    <p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#"
-                            class="btn btn-white-outline">Explore</a></p>
+                    <p><a href="" class="btn btn-secondary me-2">Shop Now</a></p>
                 </div>
             </div>
             <div class="col-lg-7">
