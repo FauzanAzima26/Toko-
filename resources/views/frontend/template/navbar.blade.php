@@ -17,7 +17,9 @@
                 <li class="nav-item {{ request()->routeIs('frontend.shop') ? 'active' : 'collapsed' }}">
                     <a class="nav-link" href="{{ route('frontend.shop') }}">Shop</a>
                 </li>
-                <li><a class="nav-link" href="about.html">About us</a></li>
+                <li class="nav-item {{ request()->routeIs('frontend.about') ? 'active' : 'collapsed' }}">
+                    <a class="nav-link" href="{{ route('frontend.about') }}">About us</a>
+                </li>
                 <li><a class="nav-link" href="contact.html">Contact us</a></li>
             </ul>
 
