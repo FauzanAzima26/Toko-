@@ -43,8 +43,8 @@
                         @endguest
                     </ul>
                 </li>
-                <li><a class="nav-link" href="{{ route('frontend.cart.index') }}"><img
-                            src="{{ asset('frontend') }}/images/cart.svg"></a></li>
+                <li><a class="nav-link" href="{{ Auth::check() ? route('frontend.cart.index') : route('login') }}""><img
+                            src=" {{ asset('frontend') }}/images/cart.svg"></a></li>
             </ul>
 
         </div>
