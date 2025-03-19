@@ -31,18 +31,9 @@
 
 	@include('frontend.template.navbar')
 
-	@include('frontend.template.hero')
-
-	@include('frontend.template.product')
-
-	@include('frontend.template.popular')
-
-	@include('frontend.template.blog')
-
-	@include('frontend.template.footer')
-
 	@yield('content')
 
+	@include('frontend.template.footer')
 
 	<script src="{{ asset('frontend') }}/js/bootstrap.bundle.min.js"></script>
 	<script src="{{ asset('frontend') }}/js/tiny-slider.js"></script>

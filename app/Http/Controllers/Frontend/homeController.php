@@ -15,7 +15,7 @@ class homeController extends Controller
     public function index()
     {
         $getData = Jasa__Produk::latest()->take(3)->get();
-        return view('frontend.template.main', [
+        return view('frontend.home', [
             'produck' => $getData
         ]);
     }
