@@ -1,5 +1,6 @@
 <?php
 
+use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\logController;
@@ -12,7 +13,7 @@ use App\Http\Controllers\Backend\InventoryController;
 use App\Http\Controllers\Backend\jasa_produkController;
 
 Route::get('/', [homeController::class, 'index'])->name('frontend.home');
-Route::get('/shop', [shopController::class, 'index'])->name('frontend.shop');
+Route::resource('shop', shopController::class)->names('frontend.shop');
 Route::resource('cart', cartController::class)->names('frontend.cart');
 Route::get('/about', [aboutController::class, 'index'])->name('frontend.about');
 Route::get('/contact', [contactController::class, 'index'])->name('frontend.contact');

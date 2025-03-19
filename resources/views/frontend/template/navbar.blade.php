@@ -14,8 +14,8 @@
                 <li class="nav-item {{ request()->routeIs('frontend.home') ? 'active' : 'collapsed' }}">
                     <a class="nav-link" href="{{ route('frontend.home') }}">Home</a>
                 </li>
-                <li class="nav-item {{ request()->routeIs('frontend.shop') ? 'active' : 'collapsed' }}">
-                    <a class="nav-link" href="{{ route('frontend.shop') }}">Shop</a>
+                <li class="nav-item {{ request()->routeIs('frontend.shop.index') ? 'active' : 'collapsed' }}">
+                    <a class="nav-link" href="{{ route('frontend.shop.index') }}">Shop</a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('frontend.about') ? 'active' : 'collapsed' }}">
                     <a class="nav-link" href="{{ route('frontend.about') }}">About us</a>
@@ -27,9 +27,11 @@
 
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                        onclick="toggleDropdown()">
-                        <img src="{{ asset('frontend') }}/images/user.svg" alt="User">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown"
+                        role="button" onclick="toggleDropdown()">
+                        <img src="{{ asset('frontend') }}/images/user.svg" alt="User" class="me-2" width="24"
+                            height="24">
+                        <span>{{ Auth::check() ? Auth::user()->name : 'Login' }}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" id="dropdownMenu">
                         @guest

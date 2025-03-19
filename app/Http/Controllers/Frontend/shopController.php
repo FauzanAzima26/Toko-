@@ -14,4 +14,13 @@ class shopController extends Controller
             'produck' => $getData
         ]);
     }
+
+    public function show(string $uuid)
+    {
+        $data = Jasa__Produk::where('uuid', $uuid)->first();
+
+        return response()->json([
+            'data' => $data
+        ]);
+    }
 }
