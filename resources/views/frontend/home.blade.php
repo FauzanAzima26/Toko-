@@ -12,7 +12,7 @@
                         <p class="mb-4">Studio kami siap memenuhi segala kebutuhan anda! Dari desain kreatif hingga proses
                             cetak berkualitas tinggi, semuanya ditangani oleh tenaga profesional dan berpengalaman untuk
                             memastikan hasil terbaik bagi anda.</p>
-                        <p><a href="{{ route('frontend.shop') }}" class="btn btn-secondary me-2">Shop Now</a></p>
+                        <p><a href="{{ route('frontend.shop.index') }}" class="btn btn-secondary me-2">Shop Now</a></p>
                     </div>
                 </div>
                 <div class="col-lg-7">
