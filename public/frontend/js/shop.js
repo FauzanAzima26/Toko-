@@ -42,7 +42,9 @@ const detailProduk = (e) => {
             console.log(parsedData);
             // Mengisi data ke dalam modal
             $("#viewName").text(parsedData.jasa_produk);
+
             $("#productPrice").text("Rp " + parsedData.harga.toLocaleString('id-ID'));
+
             $("#productDescription").text(parsedData.deskripsi);
 
             // Menampilkan gambar

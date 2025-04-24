@@ -21,7 +21,6 @@
             </div>
             <div class="modal-footer">
             <button class="btn btn-black btn-lg py-3 btn-block" onclick="addToCart()">Buat pesanan</button>
-
         </div>
     </div>
 </div>
@@ -56,8 +55,23 @@
         font-size: 16px;
         color: #333;
     }
+
+    .swal2-title {
+        font-weight: 400 !important; /* Mengatur ketebalan font menjadi normal */
+        font-size: 18px !important; /* Perkecil ukuran font */
+    }
+
+    .swal2-content {
+        font-size: 14px !important; /* Perkecil ukuran font isi */
+    }
+
+    .swal2-confirm {
+        font-size: 14px !important; /* Perkecil ukuran font tombol OK */
+        padding: 6px 12px !important; /* Sesuaikan ukuran tombol */
+    }
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function addToCart() {
         // Contoh data produk (ambil dari elemen halaman)
@@ -83,7 +97,14 @@
         // Simpan kembali ke localStorage
         localStorage.setItem('cart', JSON.stringify(cart));
 
-        alert("Produk berhasil ditambahkan ke keranjang!");
-        window.location.href = "/cart"; // Redirect ke halaman cart
+        // Tampilkan SweetAlert dengan ukuran font lebih kecil
+        Swal.fire({
+            title: "Produk berhasil ditambahkan ke keranjang!",
+            customClass: {
+                title: "swal2-title",
+                content: "swal2-content",
+                confirmButton: "swal2-confirm"
+            }
+        });
     }
 </script>
