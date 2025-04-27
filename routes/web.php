@@ -10,6 +10,7 @@ use App\Http\Controllers\Frontend\shopController;
 use App\Http\Controllers\Frontend\aboutController;
 use App\Http\Controllers\Frontend\contactController;
 use App\Http\Controllers\Backend\InventoryController;
+use App\Http\Controllers\Frontend\KeranjangController;
 use App\Http\Controllers\Backend\jasa_produkController;
 
 Route::get('/', [homeController::class, 'index'])->name('frontend.home');
@@ -17,6 +18,7 @@ Route::resource('shop', shopController::class)->names('frontend.shop');
 Route::resource('cart', cartController::class)->names('frontend.cart');
 Route::get('/about', [aboutController::class, 'index'])->name('frontend.about');
 Route::get('/contact', [contactController::class, 'index'])->name('frontend.contact');
+Route::post('/keranjang', [KeranjangController::class, 'store'])->name('keranjang.store');
 
 Auth::routes();
 

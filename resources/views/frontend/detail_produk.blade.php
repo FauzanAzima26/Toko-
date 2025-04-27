@@ -1,10 +1,15 @@
-<div class="modal fade" id="modalView" tabindex="-1" role="dialog" aria-labelledby="modalViewLabel" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade" id="modalView" data-id="{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="modalViewLabel" aria-hidden="true">
+
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+            <!-- Header Modal -->
             <div class="modal-header" style="background-color: #3b5d50; color: white;">
-                <h5 class="modal-title" id="modalViewLabel">Detail Produk</h5> <button type="button"
-                    class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="modalViewLabel">Detail Produk</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
+            <!-- Body Modal -->
             <div class="modal-body">
                 <div class="form-group">
                     <div id="viewImageContainer" class="me-3"> <!-- Tempat untuk menampilkan gambar --> </div>
@@ -18,12 +23,22 @@
                 <div class="form-group">
                     <p id="productDescription"></p>
                 </div>
+                <!-- Tambahan Input Jumlah -->
+                <div class="form-group">
+                    <label for="orderQuantity" style="font-weight: bold;">Jumlah Pesanan</label>
+                    <input type="number" class="form-control" id="orderQuantity" min="1" value="1">
+                </div>
             </div>
+
+            <!-- Footer Modal -->
             <div class="modal-footer">
-            <button class="btn btn-black btn-lg py-3 btn-block" onclick="addToCart()">Buat pesanan</button>
+                <button class="btn btn-black btn-lg py-3 btn-block" onclick="addToCart()">Masukan Keranjang</button>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- Style -->
 <style>
     #viewImageContainer {
         display: block;
@@ -57,54 +72,71 @@
     }
 
     .swal2-title {
-        font-weight: 400 !important; /* Mengatur ketebalan font menjadi normal */
-        font-size: 18px !important; /* Perkecil ukuran font */
+        font-weight: 400 !important;
+        font-size: 18px !important;
     }
 
     .swal2-content {
-        font-size: 14px !important; /* Perkecil ukuran font isi */
+        font-size: 14px !important;
     }
 
     .swal2-confirm {
-        font-size: 14px !important; /* Perkecil ukuran font tombol OK */
-        padding: 6px 12px !important; /* Sesuaikan ukuran tombol */
+        font-size: 14px !important;
+        padding: 6px 12px !important;
     }
 </style>
 
+<!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Script Tambahan -->
 <script>
     function addToCart() {
-        // Contoh data produk (ambil dari elemen halaman)
-        let product = {
-            id: 1, // Ganti dengan id dinamis
-            name: "Product 1",
-            price: 49000,
-            quantity: 1,
-            image: "{{ asset('frontend/images/product-1.png') }}"
-        };
+    const modal = $("#modalView");
+    const productId = modal.data("id"); // Ambil product_id dari data-id modal
+    const quantity = $("#orderQuantity").val();
 
-        // Ambil data cart dari localStorage
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        // Cek apakah produk sudah ada di cart
-        let existingProduct = cart.find(item => item.id === product.id);
-        if (existingProduct) {
-            existingProduct.quantity += 1;
-        } else {
-            cart.push(product);
-        }
-
-        // Simpan kembali ke localStorage
-        localStorage.setItem('cart', JSON.stringify(cart));
-
-        // Tampilkan SweetAlert dengan ukuran font lebih kecil
+    // Validasi input
+    if (quantity < 1) {
         Swal.fire({
-            title: "Produk berhasil ditambahkan ke keranjang!",
-            customClass: {
-                title: "swal2-title",
-                content: "swal2-content",
-                confirmButton: "swal2-confirm"
-            }
+            title: "Jumlah tidak valid",
+            text: "Minimal 1 item harus dipesan.",
+            icon: "warning",
         });
+        return;
     }
+
+    // Kirim request AJAX
+    $.ajax({
+        url: "{{ route('keranjang.store') }}",
+        method: "POST",
+        data: {
+            produk_id: productId,
+            jumlah: quantity,
+            _token: "{{ csrf_token() }}",
+        },
+        success: function (response) {
+            Swal.fire({
+                title: "Berhasil!",
+                text: response.message,
+                icon: "success",
+            });
+            modal.modal("hide");
+        },
+        error: function (xhr) {
+            let errorMessage = "Terjadi kesalahan. Silakan coba lagi.";
+            if (xhr.status === 401) {
+                errorMessage = "Anda harus login terlebih dahulu!";
+            } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                errorMessage = xhr.responseJSON.error;
+            }
+            Swal.fire({
+                title: "Gagal!",
+                text: errorMessage,
+                icon: "error",
+            });
+        },
+    });
+}
+
 </script>
