@@ -7,12 +7,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use App\Http\service\produkSevice;
 
 class jasa_produkController extends Controller
 {
-    public function index($paginate = 5)
+    public function __construct(
+        private produkSevice $jasa_produkService
+    )
     {
-        $getData = Jasa__Produk::latest()->paginate($paginate);
+    }
+    
+    public function index()
+    {
+        $getData = $this->jasa_produkService->getWithPaginate(10);
         return view('backend.jasa_produk.index', [
             'jasa' => $getData
         ]);

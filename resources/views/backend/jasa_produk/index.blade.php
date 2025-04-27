@@ -75,7 +75,8 @@
       <td class="text-center">{{$produk->jasa_produk}}</td>
       <td class="text-center">Rp.{{ number_format($produk->harga, 0, ',', '.') }}</td>
       <td class="text-center">
-      <a href="{{ asset($produk->image) }}" data-lightbox="produktory" data-title="{{ $produk->jasa_produk }}">
+      <a href="{{ asset($produk->image) }}" data-lightbox="produktory"
+      data-title="{{ $produk->jasa_produk }}">
       <img src="{{ asset($produk->image) }}" alt="Gambar Produk" class="img-fluid img-thumbnail"
         style="max-width: 100px; cursor: pointer;">
       </a>
