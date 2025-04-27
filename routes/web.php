@@ -18,7 +18,6 @@ Route::resource('shop', shopController::class)->names('frontend.shop');
 Route::resource('cart', cartController::class)->names('frontend.cart');
 Route::get('/about', [aboutController::class, 'index'])->name('frontend.about');
 Route::get('/contact', [contactController::class, 'index'])->name('frontend.contact');
-Route::post('/keranjang', [KeranjangController::class, 'store'])->name('keranjang.store');
 
 Auth::routes();
 

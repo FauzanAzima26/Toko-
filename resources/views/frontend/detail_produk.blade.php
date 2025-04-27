@@ -108,7 +108,7 @@
 
     // Kirim request AJAX
     $.ajax({
-        url: "{{ route('keranjang.store') }}",
+        url: "{{ route('frontend.cart.store') }}",
         method: "POST",
         data: {
             produk_id: productId,

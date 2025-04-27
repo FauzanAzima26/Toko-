@@ -10,6 +10,12 @@ use App\Http\Controllers\Controller;
 
 class KeranjangController extends Controller
 {
+
+    public function index(){
+        return view('frontend.keranjang.index');
+    }
+
+
     public function store(Request $request)
     {
         // Cek autentikasi pengguna
