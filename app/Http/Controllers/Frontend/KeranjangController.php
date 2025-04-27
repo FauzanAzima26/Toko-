@@ -34,7 +34,7 @@ class KeranjangController extends Controller
         if ($existingCart) {
             // Update jumlah jika produk sudah ada di keranjang
             $existingCart->update([
-                'jumlah' => $existingCart->jumlah + $validated['jumlah']
+                'jumlah' =>$validated['jumlah']
             ]);
         } else {
             // Tambahkan ke keranjang jika belum ada
