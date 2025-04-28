@@ -3,18 +3,25 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Models\Keranjang;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Jasa__Produk;
+use Illuminate\Http\Request;
+use App\Http\service\cartService;
+use App\Http\Controllers\Controller;
 
 class cartController extends Controller
 {
+    public function __construct(
+        private cartService $cartService
+    ){}
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('frontend.cart');
+        $data = $this->cartService->getWithPaginate(10);
+        return view('frontend.cart', [
+            'cart' => $data
+        ]);
     }
 
     /**

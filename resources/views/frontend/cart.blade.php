@@ -4,11 +4,8 @@
 
     @push('css')
         <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
     @endpush
-
     <div class="untree_co-section product-section before-footer-section">
         <div class="container">
             <div class="row">
@@ -24,7 +21,26 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($cart as $data)
 
+                            <tr>
+                                <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $data->produk->jasa_produk }}</td>
+                                <td class="text-center"><img src="{{ asset('storage/' . $data->produk->image) }}" alt=""
+                                        width="50px" height="50px"></td>
+                                <td class="text-center">{{ $data->jumlah }}</td>
+                                <td class="text-center">Rp.
+                                    {{ number_format($data->produk->harga * $data->jumlah, 0, ',', '.') }}</td>
+                                <td class="text-center">
+                                    <form action="#" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+
+                        @endforeach
                     </tbody>
                 </table>
             </div>
