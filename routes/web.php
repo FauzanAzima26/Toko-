@@ -10,7 +10,6 @@ use App\Http\Controllers\Frontend\shopController;
 use App\Http\Controllers\Frontend\aboutController;
 use App\Http\Controllers\Frontend\contactController;
 use App\Http\Controllers\Backend\InventoryController;
-use App\Http\Controllers\Frontend\KeranjangController;
 use App\Http\Controllers\Backend\jasa_produkController;
 
 Route::get('/', [homeController::class, 'index'])->name('frontend.home');

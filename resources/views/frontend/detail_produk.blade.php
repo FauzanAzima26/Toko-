@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="modalView" data-id="{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="modalViewLabel" aria-hidden="true">
+<div class="modal fade" id="modalView" tabindex="-1" role="dialog" aria-labelledby="modalViewLabel" aria-hidden="true">
 
     <div class="modal-dialog" role="document">
         <div class="modal-content">

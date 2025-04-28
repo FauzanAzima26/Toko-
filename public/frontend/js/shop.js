@@ -28,42 +28,46 @@ const toastError = (message) => {
 };
 
 // Fungsi detailProduk
+// Fungsi detailProduk
 const detailProduk = (e) => {
-    let id = e.getAttribute("data-id");
+    const productUuid = $(e).data('id'); // Ambil data-id dari elemen yang diklik
 
     startLoading();
 
     $.ajax({
         type: "GET",
-        url: "/shop/" + id,
+        url: "/shop/" + productUuid,
         success: function (response) {
-            let parsedData = response.data;
+            const parsedData = response.data;
 
             console.log(parsedData);
+
             // Mengisi data ke dalam modal
             $("#viewName").text(parsedData.jasa_produk);
-
             $("#productPrice").text("Rp " + parsedData.harga.toLocaleString('id-ID'));
-
             $("#productDescription").text(parsedData.deskripsi);
 
             // Menampilkan gambar
-            const imageContainer =
-                document.getElementById("viewImageContainer");
+            const imageContainer = document.getElementById("viewImageContainer");
             imageContainer.innerHTML = ""; // Kosongkan container sebelum menambahkan gambar baru
+
             if (parsedData.image) {
                 const img = document.createElement("img");
-                img.src = "/" + parsedData.image; // Pastikan ini sesuai dengan path yang benar
+                img.src = "/" + parsedData.image; // Pastikan ini sesuai dengan path
                 img.alt = "Gambar Produk";
-                img.className = "img-fluid"; // Gunakan class Bootstrap untuk gambar responsif
-                img.style.width = "100%"; // Gambar mengisi container
-                img.style.height = "auto"; // Menjaga rasio aspek
-                imageContainer.appendChild(img); // Tambahkan gambar ke container
+                img.className = "img-fluid"; // Class Bootstrap untuk responsif
+                img.style.width = "100%";
+                img.style.height = "auto";
+                imageContainer.appendChild(img);
             }
+
+            // Set id produk ke modal untuk kebutuhan lain (misal tambah ke keranjang)
+            $("#modalView").data('id', parsedData.id);
 
             // Tampilkan modal
             $("#modalView").modal("show");
             $(".modalTitle").html('<i class="fa fa-eye"></i> Detail Produk');
+
             stopLoading();
         },
         error: function (jqXHR, response) {
@@ -73,3 +77,4 @@ const detailProduk = (e) => {
         },
     });
 };
+
