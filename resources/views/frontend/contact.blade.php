@@ -9,8 +9,7 @@
       <div class="col-lg-5">
       <div class="intro-excerpt">
         <h1>Contact</h1>
-        <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit
-        imperdiet dolor tempor tristique.</p>
+        <p class="mb-4">Anda ingin bertanya lebih lanjut? Bisa kok! Caranya, Hubungi kami melalui E-mail atau No.Hp yang tertera.</p>
         <p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a>
         </p>
       </div>
@@ -48,7 +47,7 @@
             </svg>
           </div> <!-- /.icon -->
           <div class="service-contents">
-            <p>43 Raymouth Rd. Baltemoer, London 3910</p>
+            <p>Kampus Unimal, Reuleut</p>
           </div> <!-- /.service-contents-->
           </div> <!-- /.service -->
         </div>

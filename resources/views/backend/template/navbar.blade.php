@@ -5,7 +5,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">Percetakan</span>
+        <span class="d-none d-lg-block">Malikussaleh Advertising</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn" style="margin-left: -37px;"></i>
     </div><!-- End Logo -->

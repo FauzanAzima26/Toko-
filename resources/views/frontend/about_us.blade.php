@@ -31,7 +31,7 @@
             <div class="row justify-content-between align-items-center">
                 <div class="col-lg-6">
                     <h2 class="section-title">Why Choose Us?</h2>
-                    <p>Studio kami siap memenuhi segala kebutuhan cetak untuk bisnis personal maupun perusahaan. Dengan
+                    <p>Kami siap memenuhi segala kebutuhan cetak untuk bisnis personal maupun perusahaan. Dengan
                         dukungan tenaga ahli dan teknologi canggih, kami membantu Anda menghemat waktu dan tenaga, sekaligus
                         menghadirkan hasil cetakan berkualitas tinggi yang memenuhi standar profesional.</p>
 

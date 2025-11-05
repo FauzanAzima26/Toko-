@@ -9,7 +9,7 @@
                         <a href="index.html" class="logo d-flex align-items-center justify-content-center text-center"
                             style="text-decoration: none;">
                             <img src="{{ asset('backend/asset') }}/img/logo.png" alt="" style="margin-right: 10px;">
-                            <span style="font-weight: bold; font-size: 24px; color: #333;">NiceAdmin</span>
+                            <span style="font-weight: bold; font-size: 24px; color: #333;">Buat Akun Anda Disini</span>
                         </a>
                     </div>
                     <div class="card mb-3">
@@ -79,7 +79,7 @@
                                     href="{{ route('login') }}">Log in</a></p>
                         </div>
                     </div>
-                    <div class="credits">Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a></div>
+                   
                 </div>
             </div>
         </div>

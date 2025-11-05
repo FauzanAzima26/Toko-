@@ -26,3 +26,13 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     Route::get('log', [logController::class, 'index'])->name('log');
 });
+
+use App\Http\Controllers\Auth\TwoFactorController;
+
+Route::middleware('auth')->group(function () {
+    Route::get('/2fa/setup', [TwoFactorController::class, 'show2faForm'])->name('2fa.setup');
+    Route::post('/2fa/enable', [TwoFactorController::class, 'enable2fa'])->name('2fa.enable');
+});
+
+Route::get('/2fa/verify', [TwoFactorController::class, 'showVerifyForm'])->name('2fa.verify.form');
+Route::post('/2fa/verify', [TwoFactorController::class, 'verify2fa'])->name('2fa.verify');

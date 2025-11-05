@@ -24,7 +24,7 @@
 	<link href="{{ asset('frontend') }}/css/tiny-slider.css" rel="stylesheet">
 	<link href="{{ asset('frontend') }}/css/style.css" rel="stylesheet">
 	@stack('css')
-	<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
+	<title>Malikussaleh Advertising </title>
 </head>
 
 <body>
